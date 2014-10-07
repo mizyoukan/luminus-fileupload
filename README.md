@@ -1,6 +1,6 @@
 # luminus-fileupload
 
-FIXME
+File up/downloader using [Luminus](http://www.luminusweb.net/) for training
 
 ## Prerequisites
 
@@ -16,4 +16,6 @@ To start a web server for the application, run:
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2014 Tamaki Mizuha
+
+Distributed under the [MIT License](http://opensource.org/licenses/MIT).
