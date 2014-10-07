@@ -17,22 +17,21 @@
   []
   (.exists (new java.io.File (str (io/resource-path) db-store ".mv.db"))))
 
-(defn create-users-table
+(defn create-files-table
   []
   (sql/db-do-commands
     db-spec
     (sql/create-table-ddl
-      :users
-      [:id "varchar(20) PRIMARY KEY"]
-      [:first_name "varchar(30)"]
-      [:last_name "varchar(30)"]
-      [:email "varchar(30)"]
-      [:admin :boolean]
-      [:last_login :time]
-      [:is_active :boolean]
-      [:pass "varchar(100)"])))
+      :files
+      [:id :INT "PRIMARY KEY AUTO_INCREMENT"]
+      [:name "VARCHAR(256) NOT NULL"]
+      [:data :BLOB "NOT NULL"]
+      [:content_type "VARCHAR(128) NOT NULL"]
+      [:size :INT "NOT NULL"]
+      [:comment "VARCHAR(256)"]
+      [:created :DATETIME "NOT NULL"])))
 
 (defn create-tables
   "creates the database tables used by the application"
   []
-  (create-users-table))
+  (create-files-table))

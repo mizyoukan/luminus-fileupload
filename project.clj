@@ -1,6 +1,6 @@
 (defproject luminus-fileupload "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "File upload/download using luminus for training"
+  :url "https://github.com/mizyoukan/luminus-fileupload"
   :dependencies [[log4j "1.2.17" :exclusions [javax.mail/mail
                                               javax.jms/jms
                                               com.sun.jdmk/jmxtools

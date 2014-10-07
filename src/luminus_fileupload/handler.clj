@@ -11,7 +11,8 @@
             [taoensso.timbre.appenders.rotor :as rotor]
             [selmer.parser :as parser]
             [environ.core :refer [env]]
-            [cronj.core :as cronj]))
+            [cronj.core :as cronj]
+            [luminus-fileupload.db.schema :as schema]))
 
 (defroutes base-routes
   (route/resources "/")
@@ -38,6 +39,7 @@
   (if (env :dev) (parser/cache-off!))
   ;;start the expired session cleanup job
   (cronj/start! session-manager/cleanup-job)
+  (when-not (schema/initialized?) (schema/create-tables))
   (timbre/info "\n-=[ luminus-fileupload started successfully"
                (when (env :dev) "using the development profile") "]=-"))
 

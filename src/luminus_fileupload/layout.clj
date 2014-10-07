@@ -3,13 +3,15 @@
             [clojure.string :as s]
             [ring.util.response :refer [content-type response]]
             [compojure.response :refer [Renderable]]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]]
+            [selmer.filters :refer [add-filter!]]))
 
 (def template-path "templates/")
 
 (deftype RenderableTemplate [template params]
   Renderable
   (render [this request]
+    (add-filter! :empty? empty?)
     (content-type
       (->> (assoc params
                   (keyword (s/replace template #".html" "-selected")) "active"

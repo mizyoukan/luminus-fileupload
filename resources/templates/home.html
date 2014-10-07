@@ -1,14 +1,54 @@
 {% extends "templates/base.html" %}
 {% block content %}
-  <div class="jumbotron">
-    <h1>Welcome to luminus-fileupload</h1>
-    <p>Time to start building your site!</p>
-    <p><a class="btn btn-primary btn-lg" href="http://luminusweb.net">Learn more &raquo;</a></p>
-  </div>
-
-  <div class="row-fluid">
-    <div class="span9">
-    {{content|safe}}
+  <h1>Welcome to luminus-fileupload</h1>
+  <form action="{{servlet-context}}/upload" method="POST" enctype="multipart/form-data">
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label for="file" class="col-xs-2 control-label">File</label>
+        <div class="col-xs-10{% if file-error %} has-error{% endif %}">
+          <input type="file" id="file" name="file" />
+          {% if file-error %}
+            <span class="help-block">{{file-error}}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="comment" class="col-xs-2 control-label">Comment</label>
+        <div class="col-xs-10"{% if comment-error %} has-error{% endif %}>
+          <input type="text" class="form-control" id="comment" name="comment" value="{{comment}}" />
+          {% if comment-error %}
+            <span class="help-block">{{comment-error}}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-10">
+          <input type="submit" class="btn btn-default" value="Upload" />
+        </div>
+      </div>
     </div>
-  </div>
+  </form>
+  {% if files|empty?%}
+  {% else %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Size</th>
+          <th>Uploaded</th>
+          <th>Comment</th>
+          <th />
+        </tr>
+      </thead>
+      {% for file in files %}
+        <tbody>
+          <td><a href="{{servlet-context}}/download?id={{file.id}}">{{file.name}}</a></td>
+          <td>{{file.size}}</td>
+          <td>{{file.created|date:"yyyy-MM-dd HH:mm:ss"}}</td>
+          <td>{{file.comment}}</td>
+          <td><a href="{{servlet-context}}/delete?id={{file.id}}">Delete</a></td>
+        </tbody>
+      {% endfor %}
+    </table>
+  {% endif %}
 {% endblock %}
